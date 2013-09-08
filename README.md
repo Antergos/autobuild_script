@@ -1,4 +1,4 @@
-* Autobuild Script to create testing Antergos images
+= Autobuild Script to create testing Antergos images
 
 The script will be executed every Sunday at 6:00am (UTC/GMT +1). The final image will have 
 latest git code from our account (master branch).
