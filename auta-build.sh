@@ -13,7 +13,7 @@ _build_log(){
         echo >> /tmp/build_finished2_${arch}.log
         echo "Build Log:" >> /tmp/build_finished2_${arch}.log
         echo >> /tmp/build_finished2_${arch}.log
-        cat /tmp/build_finished2_${arch}.log /tmp/antergos_build_${arch}.log > /tmp/build_finished_${arch}.log
+        cat /tmp/build_finished2_${arch}.log /tmp/antergos_build_${arch}.log > /tmp/build_${arch}.log
 }
 
 

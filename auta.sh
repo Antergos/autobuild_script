@@ -1,26 +1,18 @@
 #!/bin/bash
 
-source /etc/antergos_autobuild.config
+source auta.config
 
 _clean_build(){
         rm -rf /tmp/{antergos*,build*}
         rm -rf ${DIR}/{work,out}
         rm -rf ${CNCHI_INSTALL}/usr/bin/cnchi
-        rm -rf ${CNCHI_INSTALL}/usr/share/cnchi/
-
-        for files in po/*; do
-                if [ -f "$files" ] && [ "$files" != 'po/cnchi.pot' ]; then
-                STRING_PO=`echo ${files#*/}`
-                STRING=`echo ${STRING_PO%.po}`
-                rm -rf ${CNCHI_INSTALL}/usr/share/locale/${STRING}/LC_MESSAGES/cnchi.mo
-                fi
-        done
+        rm -rf ${CNCHI_INSTALL}/usr/share/locale/*/LC_MESSAGES/cnchi.*
 }
 
 _move_files(){
         rm -rf /var/www/antergos/iso/testing/*
         mv ${DIR}/out/* /var/www/antergos/iso/testing/
-        mv /tmp/build_finished_*.log /var/www/antergos/iso/testing/
+        mv /tmp/build_{i686,x86_64}.log /var/www/antergos/iso/testing/
 }
 _send_mail(){
         echo "New Antergos Automatic Build - $(date +%Y.%m.%d)" >> /tmp/antergos_mail
@@ -40,7 +32,7 @@ _send_mail(){
 _get_code(){
         mkdir -p ${CODE_DIR}
         cd ${CODE_DIR}
-        git clone https://github.com/Antergos/Cnchi
+        git clone -b testing https://github.com/Antergos/Cnchi
 }
 
 
@@ -51,7 +43,7 @@ _install_cnchi(){
         install -Dm755 "cnchi" "${CNCHI_INSTALL}/usr/bin/cnchi"
 
         for i in data scripts src ui; do
-                cp -R ${i} "${CNCHI_INSTALL}/usr/share/cnchi/"
+                cp -Rf ${i} "${CNCHI_INSTALL}/usr/share/cnchi/"
         done
 
         for files in po/*; do
@@ -78,8 +70,12 @@ _get_code
 # Building GIT branch of Cnchi
 _install_cnchi
 
-build_execute.sh
-linux32 build_execute.sh
+
+# Build x86_64 version
+auta-build.sh
+#Build i686 version
+linux32 auta-build.sh
+
 
 if [[ -e ${DIR}/out/${iso_name}-${iso_version}-x86_64.iso ]];then
         BUILD_x86_64="Success!"
