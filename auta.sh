@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source auta.config
+source /etc/auta/auta.config
 
 _clean_build(){
         rm -rf /tmp/{antergos*,build*}
