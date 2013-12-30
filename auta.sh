@@ -4,9 +4,7 @@ source /etc/auta/auta.config
 
 _clean_build(){
         rm -rf /tmp/{antergos*,build*}
-        rm -rf ${DIR}/{work,out}
-        rm -rf ${CNCHI_INSTALL}/usr/bin/cnchi
-        rm -rf ${CNCHI_INSTALL}/usr/share/locale/*/LC_MESSAGES/cnchi.*
+        rm -rf ${DIR}
 }
 
 _move_files(){
@@ -33,6 +31,12 @@ _get_code(){
         mkdir -p ${CODE_DIR}
         cd ${CODE_DIR}
         git clone -b testing https://github.com/Antergos/Cnchi
+        git clone https://github.com/Antergos/antergos-iso
+}
+
+_set_working_environment(){
+        mkdir -p /home/antergos
+        mv ${CODE_DIR}/antergos-iso/configs/antergos ${DIR}
 }
 
 
@@ -61,11 +65,14 @@ _install_cnchi(){
 if [[ -e ${DIR}/work ]];then
         _clean_build
 fi
-if [[ -e ${CODE_DIR}/Cnchi ]];then
-        rm -rf ${CODE_DIR}/Cnchi
+if [[ -e ${CODE_DIR}]];then
+        rm -rf ${CODE_DIR}
 fi
 
 _get_code
+
+# Set working environment /home/antergos
+_set_working_environment
 
 # Building GIT branch of Cnchi
 _install_cnchi
