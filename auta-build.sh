@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source antergos_autobuild.config
+source /etc/auta/auta.config
 
 _build_log(){
         echo "New Antergos Automatic Build ${arch} - $(date +%Y.%m.%d)" > /tmp/build_finished_${arch}.log

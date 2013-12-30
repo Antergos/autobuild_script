@@ -3,14 +3,20 @@
 source /etc/auta/auta.config
 
 _clean_build(){
+        echo "> Cleaning the working environment..."
         rm -rf /tmp/{antergos*,build*}
         rm -rf ${DIR}
+        echo ">< Cleaning the working environment * DONE *"
 }
 
 _move_files(){
         rm -rf /var/www/antergos/iso/testing/*
+        echo "> Moving generated images to destination folder..."
         mv ${DIR}/out/* /var/www/antergos/iso/testing/
+        echo ">< Moving generated images to destination folder * DONE *"
+        echo "> Moving log files to destination folder..."
         mv /tmp/build_{i686,x86_64}.log /var/www/antergos/iso/testing/
+        echo ">< Moving log files to destination folder * DONE *"
 }
 _send_mail(){
         echo "New Antergos Automatic Build - $(date +%Y.%m.%d)" >> /tmp/antergos_mail
@@ -31,7 +37,9 @@ _get_code(){
         mkdir -p ${CODE_DIR}
         cd ${CODE_DIR}
         git clone -b testing https://github.com/Antergos/Cnchi
+        echo ">< Cnchi finished..."
         git clone https://github.com/Antergos/antergos-iso
+        echo ">< anteros-iso finished..."
 }
 
 _set_working_environment(){
@@ -65,23 +73,34 @@ _install_cnchi(){
 if [[ -e ${DIR}/work ]];then
         _clean_build
 fi
-if [[ -e ${CODE_DIR}]];then
+if [[ -e ${CODE_DIR} ]];then
         rm -rf ${CODE_DIR}
 fi
 
+echo "> Downloading the code..."
 _get_code
+echo ">< Downloading the code * DONE *"
 
+
+echo "> Creating /home/antergos as working environment..."
 # Set working environment /home/antergos
 _set_working_environment
+echo ">< Creating /home/antergos as working environment * DONE *"
 
+echo "> Installing latest Cnchi code..."
 # Building GIT branch of Cnchi
 _install_cnchi
+echo ">< Installing latest Cnchi code * DONE *"
 
 
 # Build x86_64 version
+echo "> Generating x86_64 Image..."
 auta-build.sh
+echo ">< Generating x86_64 Image * DONE *"
 #Build i686 version
+echo "> Generating i686 Image..."
 linux32 auta-build.sh
+echo ">< Generating i686 Image * DONE *"
 
 
 if [[ -e ${DIR}/out/${iso_name}-${iso_version}-x86_64.iso ]];then
