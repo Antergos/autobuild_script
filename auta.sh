@@ -5,7 +5,7 @@ source /etc/auta/auta.config
 _clean_build(){
         echo "> Cleaning the working environment..."
         rm -rf /tmp/{antergos*,build*}
-        rm -rf ${DIR}
+        rm -rf ${DIR}/*
         echo ">< Cleaning the working environment * DONE *"
 }
 
@@ -39,12 +39,11 @@ _get_code(){
         git clone -b testing https://github.com/Antergos/Cnchi
         echo ">< Cnchi finished..."
         git clone https://github.com/Antergos/antergos-iso
-        echo ">< anteros-iso finished..."
+        echo ">< antergos-iso finished..."
 }
 
 _set_working_environment(){
-        mkdir -p /home/antergos
-        mv ${CODE_DIR}/antergos-iso/configs/antergos ${DIR}
+        cp -Rf ${CODE_DIR}/antergos-iso/configs/antergos/* ${DIR}/
 }
 
 
