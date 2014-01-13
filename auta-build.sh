@@ -19,5 +19,5 @@ _build_log(){
 
 # Build ISO
 cd ${DIR}
-./build.sh -v build > /tmp/antergos_build_${arch}.log 2> /tmp/antergos_buildError_${arch}.log
+./build.sh -C -v build > /tmp/antergos_build_${arch}.log 2> /tmp/antergos_buildError_${arch}.log
 _build_log
