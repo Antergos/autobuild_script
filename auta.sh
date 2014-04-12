@@ -36,7 +36,7 @@ _send_mail(){
 _get_code(){
         mkdir -p ${CODE_DIR}
         cd ${CODE_DIR}
-        git clone -b testing https://github.com/Antergos/Cnchi
+        git clone https://github.com/Antergos/Cnchi
         echo ">< Cnchi finished..."
         git clone https://github.com/Antergos/antergos-iso
         echo ">< antergos-iso finished..."
