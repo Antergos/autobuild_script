@@ -8,6 +8,8 @@ An email is sent to the private mailing list of Antergos dev team with state of 
 These images, will be available from http://mirrors.antergos.com/iso/testing. In the same folder, a build.log will be
 available with buildings logs, separated stdout from stderr.
 
-Place auta.config in /etc
-Place auta.sh and auta-build.sh in /usr/bin
-Run /usr/bin/auta.sh
+Usage:
+
+- Place auta.config in /etc
+- Place auta.sh and auta-build.sh in /usr/bin
+- Run /usr/bin/auta.sh
