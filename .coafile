@@ -6,6 +6,7 @@ use_spaces = True
 [Python]
 bears=PEP8Bear,PyCommentedCodeBear,PyImportSortBear,PyLintBear,PyUnusedCodeBear
 files = **/*.py
+pylint_disable = C0411  # Import order is done by the PyImportSortBear
 
 [Docker]
 bears= DockerfileLintBear
